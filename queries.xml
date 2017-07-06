@@ -1,0 +1,1483 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<checks>
+<check>
+<count_check>SELECT '0.0:3:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'AUDIT_SYS_OPERATIONS' AND VALUE = 'TRUE'</count_check>
+<data_check></data_check>
+<details>Auditing of actions taken by SYS should be audited.</details>
+</check>
+<check>
+<count_check>SELECT '0.1:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'AUDIT_TRAIL' AND VALUE IN ('DB','OS','XML','DB,EXTENDED','XML,EXTENDED')</count_check>
+<data_check></data_check>
+<details>Auditing should be enabled</details>
+</check>
+<check>
+<count_check>SELECT '0.2:1:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'AUDIT_SYSLOG_LEVEL'</count_check>
+<data_check></data_check>
+<details>Auditing to syslog should be enabled</details>
+</check>
+<check>
+<count_check>SELECT '0.3:1:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'AUDIT_FILE_DEST'</count_check>
+<data_check></data_check>
+<details>The destination for audit logs has not been set</details>
+</check>
+<check>
+<count_check>SELECT '0.4:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'BACKGROUND_CORE_DUMP' AND UPPER(VALUE)='PARTIAL'</count_check>
+<data_check></data_check>
+<details>BACKGROUND_CORE_DUMP should be set to PARTIAL to avoid the SGA being included in dumps.</details>
+</check>
+<check>
+<count_check>SELECT '0.5:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SHADOW_CORE_DUMP' AND VALUE = 'NONE'</count_check>
+<data_check></data_check>
+<details>SHADOW_CORE_DUMP should be set to NONE to avoid the SGA being dumped.</details>
+</check>
+<check>
+<count_check>SELECT '0.6:1:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'LOCAL_LISTENER'</count_check>
+<data_check></data_check>
+<details></details>
+</check>
+<check>
+<count_check>SELECT '0.7:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'O7_DICTIONARY_ACCESSIBILITY' AND VALUE = 'FALSE'</count_check>
+<data_check></data_check>
+<details>Set O7_DICTIONARY_ACCESSIBILITY to false to prevent access to SYS owned objects with the use of ANY privileges.</details>
+</check>
+<check>
+<count_check>SELECT '0.8:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'OS_ROLES' AND VALUE = 'FALSE'</count_check>
+<data_check></data_check>
+<details>Set OS_ROLES to false to allow Oracle to manage roles.</details>
+</check>
+<check>
+<count_check>SELECT '0.9:1:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'REMOTE_LISTENER' AND VALUE = ''</count_check>
+<data_check></data_check>
+<details></details>
+</check>
+<check>
+<count_check>SELECT '0.10:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'REMOTE_LOGIN_PASSWORDFILE' AND UPPER(VALUE) = 'NONE'</count_check>
+<data_check></data_check>
+<details>REMOTE_LOGIN_PASSWORDFILE should be set to none.</details>
+</check>
+<check>
+<count_check>SELECT '0.11:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'REMOTE_OS_AUTHENT' AND VALUE = 'FALSE'</count_check>
+<data_check></data_check>
+<details>REMOTE_OS_AUTHENT should be set to false</details>
+</check>
+<check>
+<count_check>SELECT '0.13:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'REMOTE_OS_ROLES' AND VALUE = 'FALSE'</count_check>
+<data_check></data_check>
+<details>REMOTE_OS_ROLES should be set to false.</details>
+</check>
+<check>
+<count_check>SELECT '0.14:3:'||32*COUNT(*) FROM V$PARAMETER WHERE UPPER(NAME) = 'UTL_FILE_DIR' AND VALUE = '*'</count_check>
+<data_check></data_check>
+<details>UTL_FILE_DIR should not use a wildcard</details>
+</check>
+<check>
+<count_check>SELECT '0.15:3:'||32*COUNT(*) FROM V$PARAMETER WHERE UPPER(NAME) = 'UTL_FILE_DIR' AND VALUE = '/'</count_check>
+<data_check></data_check>
+<details>UTL_FILE_DIR is currently set to root</details>
+</check>
+<check>
+<count_check>SELECT '0.16:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SEC_CASE_SENSITIVE_LOGON' AND VALUE = 'TRUE'</count_check>
+<data_check></data_check>
+<details>SEC_CASE_SENSITIVE_LOGON should be set to true to enforce case sensitive passwords.</details>
+</check>
+<check>
+<count_check>SELECT '0.17:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SEC_MAX_FAILED_LOGIN_ATTEMPTS' AND TO_NUMBER((SELECT VALUE FROM V$PARAMETER WHERE UPPER(NAME) = 'SEC_MAX_FAILED_LOGIN_ATTEMPTS'))<=10</count_check>
+<data_check></data_check>
+<details>SEC_MAX_FAILED_LOGIN_ATTEMPTS should be set to 10 or less.</details>
+</check>
+<check>
+<count_check>SELECT '0.18:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SEC_PROTOCOL_ERROR_FURTHER_ACTION' AND VALUE IN ('DELAY,3', 'DROP,3')</count_check>
+<data_check></data_check>
+<details>SEC_PROTOCOL_ERROR_FURTHER_ACTION should be set to delay or drop after 3 errors.</details>
+</check>
+<check>
+<count_check>SELECT '0.19:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SEC_PROTOCOL_ERROR_TRACE_ACTION' AND UPPER(VALUE) IN ('LOG','ALERT','TRACE')</count_check>
+<data_check></data_check>
+<details>SEC_PROTOCOL_ERROR_TRACE_ACTION should be set to log, alert or trace.</details>
+</check>
+<check>
+<count_check>SELECT '0.20:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SEC_RETURN_SERVER_RELEASE_BANNER' AND VALUE = 'FALSE'</count_check>
+<data_check></data_check>
+<details>SEC_RETURN_SERVER_RELEASE_BANNER should be set to false to prevent the server version being sent to the client.</details>
+</check>
+<check>
+<count_check>SELECT '0.21:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'SQL92_SECURITY' AND VALUE = 'TRUE'</count_check>
+<data_check></data_check>
+<details>SQL92_SECURITY should be set to true.</details>
+</check>
+<check>
+<count_check>SELECT '0.22:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'RESOURCE_LIMIT' AND VALUE = 'TRUE'</count_check>
+<data_check></data_check>
+<details>RESOURCE_LIMIT should be set to true.</details>
+</check>
+<check>
+<count_check>SELECT '0.23:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'OPTIMIZER_SECURE_VIEW_MERGING' AND VALUE = 'TRUE'</count_check>
+<data_check></data_check>
+<details>OPTIMIZER_SECURE_VIEW_MERGING should be set to true to prevent inference attacks.</details>
+</check>
+<check>
+<count_check>SELECT '0.24:2:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'RECYCLEBIN' AND UPPER(VALUE) = 'OFF'</count_check>
+<data_check></data_check>
+<details>RECYCLEBIN should be set to OFF to prevent dropped objects being sent to the recyclebin.</details>
+</check>
+<check>
+<count_check>SELECT '0.25:1:'||((-4*(COUNT(*)+1))+8) FROM V$PARAMETER WHERE UPPER(NAME) = 'ENABLE_DDL_LOGGING' AND VALUE = 'TRUE'</count_check>
+<data_check></data_check>
+<details>ENABLE_DDL_LOGGING should be set to true (if you have a license for the Database Lifecycle Management Pack).</details>
+</check>
+<check>
+<count_check>SELECT '1.0:1:'||4*COUNT(*) FROM SYS.DBA_USERS WHERE USERNAME IN ('ANONYMOUS', 'DBSNMP', 'EXFSYS', 'LBACSYS', 'MGMT_VIEW', 'OLAPSYS', 'OWBSYS', 'ORDPLUGINS','ORDSYS', 'OUTLN', 'SI_INFORMTN_SCHEMA', 'SYSMAN', 'TSMSYS', 'WK_TEST', 'WKSYS', 'WKPROXY', 'WMSYS', 'TRACESVR', 'APPQOSSYS', 'SQLTXPLAIN', 'APEX_PUBLIC_USER', 'DIP', 'FLOWS_30000', 'FLOWS_FILES', 'MD_DATA', 'ORACLE_OCM', 'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR')</count_check>
+<data_check>SELECT USERNAME FROM SYS.DBA_USERS WHERE USERNAME IN ('ANONYMOUS', 'DBSNMP', 'EXFSYS', 'LBACSYS', 'MGMT_VIEW', 'OLAPSYS', 'OWBSYS', 'ORDPLUGINS','ORDSYS', 'OUTLN', 'SI_INFORMTN_SCHEMA', 'SYSMAN', 'TSMSYS', 'WK_TEST', 'WKSYS', 'WKPROXY', 'WMSYS', 'TRACESVR', 'APPQOSSYS', 'SQLTXPLAIN', 'APEX_PUBLIC_USER', 'DIP', 'FLOWS_30000', 'FLOWS_FILES', 'MD_DATA', 'ORACLE_OCM', 'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR')</data_check>
+<details>The following default accounts are present</details>
+</check>
+<check>
+<count_check>SELECT '1.1:2:'||4*COUNT(*) FROM SYS.DBA_USERS WHERE USERNAME IN ('SH', 'IX', 'HR', 'OE', 'PM', 'SCOTT', 'BI')</count_check>
+<data_check>SELECT USERNAME FROM SYS.DBA_USERS WHERE USERNAME IN ('SH', 'IX', 'HR', 'OE', 'PM', 'SCOTT', 'BI')</data_check>
+<details>Sample users/schemas have been found on the database server. These users should be dropped.</details>
+</check>
+<check>
+<count_check>SELECT '1.2:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'JAVAVM' -- JServer JAVA Virtual Machine</count_check>
+<data_check></data_check>
+<details>The Java Virtual Machine is present. If not required, it should be removed.</details>
+</check>
+<check>
+<count_check>SELECT '1.3:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'XDB' -- Oracle XML Database</count_check>
+<data_check></data_check>
+<details>The XML Database is present.</details>
+</check>
+<check>
+<count_check>SELECT '1.4:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'XML' -- Oracle XDK</count_check>
+<data_check></data_check>
+<details>Te Oracle XDK is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.5:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'APEX' -- Oracle Application Express</count_check>
+<data_check></data_check>
+<details>Oracle Apex is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.6:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'CONTEXT' -- Oracle Text</count_check>
+<data_check></data_check>
+<details>Oracle Text/Context is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.7:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'SDO' -- Oracle Spatial</count_check>
+<data_check></data_check>
+<details>Spatial is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.8:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'OWM' -- Oracle Workspace Manager</count_check>
+<data_check></data_check>
+<details>The Workspace Manager is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.9:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'APS' -- OLAP Analytic Workspace</count_check>
+<data_check></data_check>
+<details>OLAP Analytic Workspace is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.10:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'XOQ' -- Oracle OLAP API</count_check>
+<data_check></data_check>
+<details>OLAP API is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.11:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'CATJAVA' -- Oracle Database Java Packages</count_check>
+<data_check></data_check>
+<details>Java Packages are installed. They should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.12:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'OLS' -- Oracle Label Security</count_check>
+<data_check></data_check>
+<details>Oracle Label Security is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.13:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'DV' -- Oracle Database Vault</count_check>
+<data_check></data_check>
+<details>Oracle Database Vault is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.14:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'RAC' -- Oracle Real Application Clusters</count_check>
+<data_check></data_check>
+<details>Real Application Clusters is present.</details>
+</check>
+<check>
+<count_check>SELECT '1.15:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'RUL' -- Rules Manager</count_check>
+<data_check></data_check>
+<details>Rules Manager is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.16:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'EXF' -- Expresion Filter</count_check>
+<data_check></data_check>
+<details>Expression Filter is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.17:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'WK' -- Utlrasearch</count_check>
+<data_check></data_check>
+<details>Ultrasearch is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.18:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'AMD' -- Olap Catalog</count_check>
+<data_check></data_check>
+<details>OLAP catalog is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.19:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'EM' -- Enterprise Manager</count_check>
+<data_check></data_check>
+<details>Oracle Enterprise Manager is present.</details>
+</check>
+<check>
+<count_check>SELECT '1.20:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'CATPROC' -- Database Packages and Types</count_check>
+<data_check></data_check>
+<details>CATPROC is present.</details>
+</check>
+<check>
+<count_check>SELECT '1.21:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'CATALOG' -- Database Catalog Views</count_check>
+<data_check></data_check>
+<details>Catalog views are present.</details>
+</check>
+<check>
+<count_check>SELECT '1.22:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'OWB'</count_check>
+<data_check></data_check>
+<details>OWB is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.23:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'STATS'</count_check>
+<data_check></data_check>
+<details>Stats is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.24:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'ODM' -- Oracle Datamining</count_check>
+<data_check></data_check>
+<details>Datamining is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.25:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'MGD' -- Oracle Machine Generated Data</count_check>
+<data_check></data_check>
+<details>MGD is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.26:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'MGW' -- Oracle Messaging Gateway</count_check>
+<data_check></data_check>
+<details>Messaging Gateway is present.  It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '1.27:2:'||64*COUNT(*) FROM SYS.DBA_OBJECTS WHERE OBJECT_NAME = 'USER$MIG' AND OWNER = 'SYS'</count_check>
+<data_check></data_check>
+<details>The USER$MIG table is present. It should be dropped.</details>
+</check>
+<check>
+<count_check>SELECT '1.28:1:'||4*COUNT(*) FROM SYS.DBA_REGISTRY WHERE COMP_ID = 'ORDIM' -- Oracle Multimedia</count_check>
+<data_check></data_check>
+<details>Oracle Multimedia is present. It should be removed if not required.</details>
+</check>
+<check>
+<count_check>SELECT '2.0:2:'||(1-COUNT(*))*4 FROM SYS.DBA_PRIV_AUDIT_OPTS WHERE PRIVILEGE = 'CREATE SESSION' AND USER_NAME IS NULL</count_check>
+<data_check></data_check>
+<details>CREATE SESSION is not audited. It should be.</details>
+</check>
+<check>
+<count_check>SELECT '2.1:4:'||128*COUNT(*) FROM SYS.USER$ WHERE NAME LIKE 'OP$%' AND LENGTH(PASSWORD)=16 AND UPPER(PASSWORD) !='EXTERNAL'</count_check>
+<data_check></data_check>
+<details>An external user exists but has a password set.</details>
+</check>
+<check>
+<count_check>SELECT '2.2:2:'||((-4*(COUNT(*)+1))+8) FROM SYS.JAVA$RUNTIME$EXEC$USER$</count_check>
+<data_check></data_check>
+<details>No OS user has been specified for Java OS executions.</details>
+</check>
+<check>
+<count_check>SELECT '2.3:2:'||((-4*(COUNT(PASSWORD)+1))+4) FROM SYS.USER$ WHERE NAME = 'DBA'</count_check>
+<data_check></data_check>
+<details>No password has been set for the DBA role.</details>
+</check>
+<check>
+<count_check>SELECT '2.4:4:'||128*COUNT(*) FROM SYS.V_$PWFILE_USERS WHERE USERNAME NOT IN ('SYS','SYSDG','SYSBACKUP','SYSKM','ASMSNMP')</count_check>
+<data_check>SELECT USERNAME FROM SYS.V_$PWFILE_USERS WHERE USERNAME NOT IN ('SYS','SYSDG','SYSBACKUP','SYSKM','ASMSNMP')</data_check>
+<details>Users other than SYS, SYSDG, SYSBACKUP, SYSKM, and ASMSNMP exist in the password file</details>
+</check>
+<check>
+<count_check>SELECT '2.5:2:'||32*COUNT(*) FROM SYS.USER$ WHERE PASSWORD = 'EXTERNAL'</count_check>
+<data_check>SELECT NAME FROM SYS.USER$ WHERE PASSWORD = 'EXTERNAL'</data_check>
+<details>External users exist</details>
+</check>
+<check>
+<count_check>SELECT '2.6:2:'||COUNT(*) FROM SYS.DBA_USERS WHERE PROFILE = 'DEFAULT'</count_check>
+<data_check>SELECT USERNAME FROM SYS.DBA_USERS WHERE PROFILE = 'DEFAULT'</data_check>
+<details>Users are using the default profile.</details>
+</check>
+<check>
+<count_check>SELECT '3.0:5:'||256*COUNT(*) FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE LIKE '%ANY%' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check>SELECT PRIVILEGE FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE LIKE '%ANY%' AND GRANTEE = 'PUBLIC'</data_check>
+<details>PUBLIC has been assigned an ANY privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.1:4:'||128*COUNT(*) FROM SYS.DBA_SYS_PRIVS WHERE GRANTEE = 'PUBLIC'</count_check>
+<data_check>SELECT PRIVILEGE FROM SYS.DBA_SYS_PRIVS WHERE GRANTEE = 'PUBLIC'</data_check>
+<details>PUBLIC has been assigned a system privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.2:4:'||128*COUNT(*) FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE = 'EXEMPT ACCESS POLICY' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been assigned the EXEMPT ACCESS POLICY privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.3:4:'||128*COUNT(*) FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE = 'BECOME USER' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been assigned the BECOME USER privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.4:2:'||32*COUNT(*) FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE = 'EXECUTE ANY PROCEDURE' AND GRANTEE = 'DBSNMP'</count_check>
+<data_check></data_check>
+<details>DBSNMP has the execute any procedure privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.5:2:'||32*COUNT(*) FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE = 'EXECUTE ANY PROCEDURE' AND GRANTEE = 'OUTLN'</count_check>
+<data_check></data_check>
+<details>OUTLN has the execute any procedure privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.6:2:'||8*COUNT(*) FROM (SELECT DISTINCT GRANTEE FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE != 'CREATE SESSION' AND GRANTEE IN (SELECT PROXY FROM PROXY_USERS))</count_check>
+<data_check>SELECT * FROM (SELECT DISTINCT GRANTEE FROM SYS.DBA_SYS_PRIVS WHERE PRIVILEGE != 'CREATE SESSION' AND GRANTEE IN (SELECT PROXY FROM PROXY_USERS))</data_check>
+<details>Proxy users have been assigned a system privilege. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.7:3:'||32*COUNT(*) FROM DBA_TAB_PRIVS WHERE PRIVILEGE = 'INHERIT PRIVILEGES' AND GRANTEE = 'SYS'</count_check>
+<data_check>SELECT TABLE_NAME FROM DBA_TAB_PRIVS WHERE PRIVILEGE = 'INHERIT PRIVILEGES' AND GRANTEE = 'SYS'</data_check>
+<details>SYS has the INHERIT PRIVILEGE on a user. This allows the user to execute SQL as SYS in a SQL injection attack.</details>
+</check>
+<check>
+<count_check>SELECT '3.8:4:'||256*COUNT(*) FROM DBA_JAVA_POLICY WHERE TYPE_NAME = 'java.io.FilePermission' AND ACTION LIKE '%execute%' AND (NAME LIKE '%ALL FILES%' OR NAME LIKE '%*%') AND KIND = 'GRANT' AND ENABLED='ENABLED' AND GRANTEE ='PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute java.io.FilePermission permission. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.9:4:'||256*COUNT(*) FROM DBA_JAVA_POLICY WHERE TYPE_NAME = 'java.security.AllPermission' AND KIND = 'GRANT' AND ENABLED='ENABLED' AND GRANTEE ='PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the java.security.AllPermission permission. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.10:4:'||256*COUNT(*) FROM DBA_JAVA_POLICY WHERE TYPE_NAME = 'java.io.FilePermission' AND ACTION LIKE '%write%' AND NAME LIKE '%ALL FILES%' AND KIND = 'GRANT' AND ENABLED='ENABLED' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the write java.io.FilePermission permission. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.11:4:'||256*COUNT(*) FROM DBA_JAVA_POLICY WHERE TYPE_NAME = 'java.lang.RuntimePermission' AND NAME LIKE '%loadLibrary%' AND KIND = 'GRANT' AND ENABLED='ENABLED' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the loadLibrary java.lang.RuntimePermission permission. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '3.12:2:'||32*COUNT(*) FROM DBA_NETWORK_ACL_PRIVILEGES WHERE PRINCIPAL = 'PUBLIC'</count_check>
+<data_check>SELECT ACL||':'||PRIVILEGE FROM DBA_NETWORK_ACL_PRIVILEGES WHERE PRINCIPAL = 'PUBLIC'</data_check>
+<details>PUBLIC has been granted network privileges.</details>
+</check>
+<check>
+<count_check>SELECT '4.0:3:'||32*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'JAVASYSPRIV' AND GRANTEE !='SYS'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'JAVASYSPRIV' AND GRANTEE !='SYS'</data_check>
+<details>A non-SYS user has been granted the JAVASYSPRIV role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.1:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'JAVASYSPRIV' AND GRANTEE ='PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been assigned the JAVASYSPRIV role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.2:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'DBA' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been assigned the DBA role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.3:4:'||128*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE != 'DBA' AND GRANTED_ROLE != 'DV_PUBLIC' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE != 'DBA' AND GRANTED_ROLE != 'DV_PUBLIC' AND GRANTEE = 'PUBLIC'</data_check>
+<details>PUBLIC has been granted membership of a role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.4:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'EXECUTE_CATALOG_ROLE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the EXECUTE_CATALOG_ROLE role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.5:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'SELECT_CATALOG_ROLE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the SELECT_CATALOG_ROLE role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.6:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'DELETE_CATALOG_ROLE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the DELETE_CATALOG_ROLE role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.7:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'EXP_FULL_DATABASE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the EXP_FULL_DATABASE role. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.8:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'IMP_FULL_DATABASE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the role IMP_FULL_DATABASE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.9:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'DV_REALM_OWNER' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the role DV_REALM_OWNER. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.10:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'DATAPUMP_EXP_FULL_DATABASE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the role DATAPUMP_EXP_FULL_DATABASE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.11:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE = 'DATAPUMP_IMP_FULL_DATABASE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of the role DATAPUMP_IMP_FULL_DATABASE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '4.12:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DBA')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DBA')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the DBA role.</details>
+</check>
+<check>
+<count_check>SELECT '4.13:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'EXECUTE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'EXECUTE_CATALOG_ROLE')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the EXECUTE_CATALOG_ROLE role.</details>
+</check>
+<check>
+<count_check>SELECT '4.14:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'SELECT_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'SELECT_CATALOG_ROLE')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the SELECT_CATALOG_ROLE role.</details>
+</check>
+<check>
+<count_check>SELECT '4.15:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DELETE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DELETE_CATALOG_ROLE')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the DELETE_CATALOG_ROLE</details>
+</check>
+<check>
+<count_check>SELECT '4.16:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'EXP_FULL_DATABASE')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'EXP_FULL_DATABASE')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the EXP_FULL_DATABASE role.</details>
+</check>
+<check>
+<count_check>SELECT '4.17:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'IMP_FULL_DATABASE')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'IMP_FULL_DATABASE')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the IMP_FULL_DATABASE role.</details>
+</check>
+<check>
+<count_check>SELECT '4.18:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DATAPUMP_EXP_FULL_DATABASE')</count_check>
+<data_check></data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the DATAPUMP_EXP_FULL_DATABASE role.</details>
+</check>
+<check>
+<count_check>SELECT '4.19:5:'||256*COUNT(*) FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DATAPUMP_IMP_FULL_DATABASE')</count_check>
+<data_check>SELECT GRANTED_ROLE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTEE = 'PUBLIC' AND GRANTED_ROLE IN (SELECT P.GRANTEE FROM SYS.DBA_ROLE_PRIVS P, DBA_ROLES R WHERE R.ROLE = P.GRANTEE AND P.GRANTED_ROLE = 'DATAPUMP_IMP_FULL_DATABASE')</data_check>
+<details>PUBLIC has been granted membership of a role that has been granted membership of the DATAPUMP_IMP_FULL_DATABASE role.</details>
+</check>
+<check>
+<count_check>SELECT '4.20:2:'||8*COUNT(*) FROM (SELECT DISTINCT GRANTEE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE != 'CONNECT' AND GRANTEE IN (SELECT PROXY FROM PROXY_USERS))</count_check>
+<data_check>SELECT * FROM (SELECT DISTINCT GRANTEE FROM SYS.DBA_ROLE_PRIVS WHERE GRANTED_ROLE != 'CONNECT' AND GRANTEE IN (SELECT PROXY FROM PROXY_USERS))</data_check>
+<details>Proxy users have been granted membership of a role other than CONNECT.</details>
+</check>
+<check>
+<count_check>SELECT '5.1:2:'||8*COUNT(*) FROM (SELECT DISTINCT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE GRANTEE IN (SELECT PROXY FROM PROXY_USERS))</count_check>
+<data_check>SELECT * FROM (SELECT DISTINCT GRANTEE||':'||TABLE_NAME||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE GRANTEE IN (SELECT PROXY FROM PROXY_USERS))</data_check>
+<details>Proxy users have been granted object privileges</details>
+</check>
+<check>
+<count_check>SELECT '5.2:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='FGA$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='FGA$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on SYS.FGA$</details>
+</check>
+<check>
+<count_check>SELECT '5.3:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='RADM$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='RADM$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on SYS.RADM$</details>
+</check>
+<check>
+<count_check>SELECT '5.4:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='CONTEXT$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='CONTEXT$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on SYS.CONTEXT$</details>
+</check>
+<check>
+<count_check>SELECT '5.5:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='COL$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='COL$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on COL$</details>
+</check>
+<check>
+<count_check>SELECT '5.6:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='TRIGGER$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='TRIGGER$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on TRIGGER$</details>
+</check>
+<check>
+<count_check>SELECT '5.7:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='SOURCE$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='SOURCE$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on SOURCE$</details>
+</check>
+<check>
+<count_check>SELECT '5.8:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='OBJAUTH$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='OBJAUTH$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on OBJAUTH$</details>
+</check>
+<check>
+<count_check>SELECT '5.9:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='SYSAUTH$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='SYSAUTH$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on SYSAUTH$</details>
+</check>
+<check>
+<count_check>SELECT '5.10:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='OBJ$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='OBJ$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on OBJ$</details>
+</check>
+<check>
+<count_check>SELECT '5.11:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='JAVA$POLICY$' AND PRIVILEGE IN ('UPDATE','INSERT')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='JAVA$POLICY$' AND PRIVILEGE IN ('UPDATE','INSERT')</data_check>
+<details>Users have the INSERT or UPDATE privilege on JAVA$POLICY$</details>
+</check>
+<check>
+<count_check>SELECT '5.12:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='DBMS_PDB_EXEC_SQL' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='DBMS_PDB_EXEC_SQL' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB')</data_check>
+<details>Users have the execute privilege on DBMS_PDB_EXEC_SQL</details>
+</check>
+<check>
+<count_check>SELECT '5.13:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_JOB' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_JOB. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.14:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_LOB' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_LOB. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.15:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'UTL_FILE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on UTL_FILE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.16:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'UTL_HTTP' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on UTL_HTTP. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.17:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'UTL_SMTP' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on UTL_SMTP. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.18:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'UTL_TCP' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on UTL_TCP. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.19:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'UTL_INADDR' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on UTL_INADDR. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.20:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_LDAP' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_LDAP. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.21:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_JVM_EXP_PERMS' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_JVM_EXP_PERMS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.22:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS P, SYS.DBA_OBJECTS O WHERE P.PRIVILEGE = 'INDEX' AND P.GRANTEE = 'PUBLIC' AND P.TABLE_NAME = O.OBJECT_NAME AND O.OWNER = 'SYS'</count_check>
+<data_check>SELECT P.TABLE_NAME FROM SYS.DBA_TAB_PRIVS P, SYS.DBA_OBJECTS O WHERE P.PRIVILEGE = 'INDEX' AND P.GRANTEE = 'PUBLIC' AND P.TABLE_NAME = O.OBJECT_NAME AND O.OWNER = 'SYS'</data_check>
+<details>PUBLIC has the index privilege on tables owned by SYS</details>
+</check>
+<check>
+<count_check>SELECT '5.23:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS P, SYS.DBA_OBJECTS O WHERE P.PRIVILEGE = 'INDEX' AND P.GRANTEE = 'PUBLIC' AND P.TABLE_NAME = O.OBJECT_NAME AND O.OWNER = 'SYSTEM'</count_check>
+<data_check>SELECT P.TABLE_NAME FROM SYS.DBA_TAB_PRIVS P, SYS.DBA_OBJECTS O WHERE P.PRIVILEGE = 'INDEX' AND P.GRANTEE = 'PUBLIC' AND P.TABLE_NAME = O.OBJECT_NAME AND O.OWNER = 'SYSTEM'</data_check>
+<details>PUBLIC has the index privilege on tables owned by SYSTEM</details>
+</check>
+<check>
+<count_check>SELECT '5.24:4:'||128*COUNT(*) FROM SYS.DBA_TAB_PRIVS P, SYS.DBA_OBJECTS O WHERE P.PRIVILEGE = 'INDEX' AND P.GRANTEE = 'PUBLIC' AND P.TABLE_NAME = O.OBJECT_NAME AND O.OWNER = P.OWNER AND (O.OWNER != 'SYSTEM' AND O.OWNER !='SYS')</count_check>
+<data_check>SELECT P.TABLE_NAME FROM SYS.DBA_TAB_PRIVS P, SYS.DBA_OBJECTS O WHERE P.PRIVILEGE = 'INDEX' AND P.GRANTEE = 'PUBLIC' AND P.TABLE_NAME = O.OBJECT_NAME AND O.OWNER = P.OWNER AND (O.OWNER != 'SYSTEM' AND O.OWNER !='SYS')</data_check>
+<details>PUBLIC has index privileges on user tables</details>
+</check>
+<check>
+<count_check>SELECT '5.25:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'KUPP$PROC' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on SYS.KUPP$PROC. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.26:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'INITJVMAUX' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on SYS.INITJVMAUX. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.27:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_SYS_SQL' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_SYS_SQL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.28:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_XMLQUERY' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_XMLQUERY. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.29:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_JAVA' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_JAVA. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.30:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_JAVA_TEST' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_JAVA_TEST. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.31:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_UTILITY' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_UTILITY. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.32:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_XMLSTORE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_XMLSTORE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.33:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_XMLSAVE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_XMLSAVE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.34:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_AW' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_AW. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.35:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_STATS' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_STATS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.36:4:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on LT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.37:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_XMLGEN' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_XMLGEN. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.38:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_XSLPROCESSOR' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_XSLPROCESSOR. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.39:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_LDAP_API_FFI' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_LDAP_API_FFI. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.40:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'HTTPURITYPE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on HTTPURITYPE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.41:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SDO_NET' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on SDO_NET. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.42:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_SCHEDULER' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_SCHEDULER. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.43:2:'||4*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_IJOB' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_IJOB. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.44:3:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RLS' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_RLS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.45:2:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RLS' AND GRANTEE NOT IN ('SYS','SYSTEM','DVSYS','WMSYS','GSMADMIN_INTERNAL','GSMADMIN_INTERNAL','XDB','LBACSYS','DV_OWNER','EXECUTE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RLS' AND GRANTEE NOT IN ('SYS','SYSTEM','DVSYS','WMSYS','GSMADMIN_INTERNAL','GSMADMIN_INTERNAL','XDB','LBACSYS','DV_OWNER','EXECUTE_CATALOG_ROLE')</data_check>
+<details>Users have the execute privilege on DBMS_RLS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.46:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_FGA' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_FGA. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.47:3:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_FGA' AND GRANTEE NOT IN ('SYS','SYSTEM','AUDIT_ADMIN','EXECUTE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_FGA' AND GRANTEE NOT IN ('SYS','SYSTEM','AUDIT_ADMIN','EXECUTE_CATALOG_ROLE')</data_check>
+<details>Users have the execute privilege on DBMS_FGA. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.48:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REDACT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_REDACT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.49:2:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REDACT' AND GRANTEE NOT IN ('SYS','SYSTEM', 'IMP_FULL_DATABASE','EXECUTE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REDACT' AND GRANTEE NOT IN ('SYS','SYSTEM', 'IMP_FULL_DATABASE','EXECUTE_CATALOG_ROLE')</data_check>
+<details>Users have the execute privilege on DBMS_REDACT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.50:2:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_STREAMS_ADM' AND GRANTEE NOT IN ('SYS','SYSTEM', 'PERFDBA','EXECUTE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_STREAMS_ADM' AND GRANTEE NOT IN ('SYS','SYSTEM', 'PERFDBA','EXECUTE_CATALOG_ROLE')</data_check>
+<details>Users have the execute privilege on DBMS_STREAMS_ADM. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.51:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'AUD$' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check>SELECT PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'AUD$' AND GRANTEE = 'PUBLIC'</data_check>
+<details>PUBLIC has privileges on AUD$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.52:3:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'AUD$' AND GRANTEE NOT IN ('SYS','SYSTEM','DELETE_CATALOG_ROLE')</count_check>
+<data_check>SELECT GRANTEE||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'AUD$' AND GRANTEE NOT IN ('SYS','SYSTEM','DELETE_CATALOG_ROLE')</data_check>
+<details>Users have privileges on AUD$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.53:2:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'V_$PWFILE_USERS' AND GRANTEE NOT IN ('SYS','SYSTEM','SELECT_CATALOG_ROLE','DV_SECANALYST') AND PRIVILEGE = 'SELECT'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'V_$PWFILE_USERS' AND GRANTEE NOT IN ('SYS','SYSTEM','SELECT_CATALOG_ROLE','DV_SECANALYST') AND PRIVILEGE = 'SELECT'</data_check>
+<details>Users have the select privilege on V_$PWFILE_USERS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.54:3:'||64*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST','ORACLE_OCM') AND PRIVILEGE = 'SELECT'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST','ORACLE_OCM') AND PRIVILEGE = 'SELECT'</data_check>
+<details>Users have the select privilege on SYS.USER$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.55:3:'||128*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LINK$' AND GRANTEE NOT IN ('SYS','SYSTEM','DV_SECANALYST')</count_check>
+<data_check>SELECT GRANTEE||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LINK$' AND GRANTEE NOT IN ('SYS','SYSTEM','DV_SECANALYST')</data_check>
+<details>Users have privileges on SYS.LINK$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.56:3:'||128*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER_HISTORY$' AND GRANTEE NOT IN ('SYS','SYSTEM')</count_check>
+<data_check>SELECT GRANTEE||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER_HISTORY$' AND GRANTEE NOT IN ('SYS','SYSTEM')</data_check>
+<details>Users have privileges on USER_HISTORY$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.57:3:'||128*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SCHEDULER$_CREDENTIAL' AND GRANTEE NOT IN ('SYS','SYSTEM')</count_check>
+<data_check>SELECT GRANTEE||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SCHEDULER$_CREDENTIAL' AND GRANTEE NOT IN ('SYS','SYSTEM')</data_check>
+<details>Users have privileges on SCHEDULER$_CREDENTIAL. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.58:3:'||128*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'JAVA$RUNTIME$EXEC$USER$' AND GRANTEE NOT IN ('SYS','SYSTEM')</count_check>
+<data_check>SELECT GRANTEE||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'JAVA$RUNTIME$EXEC$USER$' AND GRANTEE NOT IN ('SYS','SYSTEM')</data_check>
+<details>Users have privileges on JAVA$RUNTIME$EXEC$USER$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.59:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'FGA_LOG$' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check>SELECT 'PUBLIC:'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'FGA_LOG$' AND GRANTEE = 'PUBLIC'</data_check>
+<details>PUBLIC has privileges on FGA_LOG$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.60:3:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'FGA_LOG$' AND GRANTEE NOT IN ('SYS','SYSTEM','DELETE_CATALOG_ROLE','PUBLIC')</count_check>
+<data_check>SELECT GRANTEE||':'||PRIVILEGE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'FGA_LOG$' AND GRANTEE NOT IN ('SYS','SYSTEM','DELETE_CATALOG_ROLE','PUBLIC')</data_check>
+<details>Users have been granted privileges on FGA_LOG$. These should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.61:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_AUDIT_MGMT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_AUDIT_MGMT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.62:2:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_AUDIT_MGMT' AND GRANTEE NOT IN ('SYS','SYSTEM','AUDIT_ADMIN','EXECUTE_CATALOG_ROLE','PUBLIC')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_AUDIT_MGMT' AND GRANTEE NOT IN ('SYS','SYSTEM','AUDIT_ADMIN','EXECUTE_CATALOG_ROLE','PUBLIC')</data_check>
+<details>Users have the execute privilege on DBMS_AUDIT_MGMT. This should be revoked</details>
+</check>
+<check>
+<count_check>SELECT '5.63:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_DBWS' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_DBWS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.64:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_ORAMTS' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_ORAMTS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.65:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_OBFUSCATION_TOOLKIT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_OBFUSCATION_TOOLKIT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.66:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_CRYPTO' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_CRYPTO. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.67:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RANDOM' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_RANDOM. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.68:2:'||8*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_ADVISOR' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_ADVISOR. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.69:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_BACKUP_RESTORE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_BACKUP_RESTORE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.70:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_AQADM_SYSCALLS' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_AQADM_SYSCALLS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.71:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REPCAT_SQL_UTL' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_REPCAT_SQL_UTL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.72:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_STREAMS_ADM_UTL' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_STREAMS_ADM_UTL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.73:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_STREAMS_RPC' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_STREAMS_RPC. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.74:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_PRVTAQIM' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_PRVTAQIM. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.75:4:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_FILE_TRANSFER' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_FILE_TRANSFER. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.76:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'WWV_DBMS_SQL' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on WWV_DBMS_SQL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.77:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'WWV_EXECUTE_IMMEDIATE' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on WWV_EXECUTE_IMMEDIATE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.78:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQL','GV_$SQL') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQL or GV_$SQL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.79:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$OPEN_CURSOR','GV_$OPEN_CURSOR') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$OPEN_CURSOR or GV_$OPEN_CURSOR. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.80:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQLAREA','GV_$SQLAREA') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQLAREA or GV_$SQLAREA. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.81:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQLAREA_PLAN_HASH','GV_$SQLAREA_PLAN_HASH') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQLAREA_PLAN_HASH or GV_$SQLAREA_PLAN_HASH. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.82:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQLSTATS','GV_$SQLSTATS') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQLSTATS or GV_$SQLSTATS. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.83:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQLSTATS_PLAN_HASH','GV_$SQLSTATS_PLAN_HASH') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQLSTATS_PLAN_HASH or GV_$SQLSTATS_PLAN_HASH. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.84:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQLTEXT','GV_$SQLTEXT') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQLTEXT or GV_$SQLTEXT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.85:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQLTEXT_WITH_NEWLINES','GV_$SQLTEXT_WITH_NEWLINES') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQLTEXT_WITH_NEWLINES or GV_$SQLTEXT_WITH_NEWLINES. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.86:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQL_MONITOR','GV_$SQL_MONITOR') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQL_MONITOR or GV_$SQL_MONITOR. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.87:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$SQL_SHARED_MEMORY','GV_$SQL_SHARED_MEMORY') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$SQL_SHARED_MEMORY or GV_$SQL_SHARED_MEMORY. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.88:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME IN ('V_$DB_OBJECT_CACHE','V_$DB_OBJECT_CACHE') AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from V_$DB_OBJECT_CACHE or GV_$DB_OBJECT_CACHE. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.89:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='DBA_HIST_SQLTEXT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from DBA_HIST_SQLTEXT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.90:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME ='WRH$_SQLTEXT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can select from WRH$_SQLTEXT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.91:3:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE GRANTEE = 'PUBLIC' AND PRIVILEGE = 'READ'</count_check>
+<data_check>SELECT TABLE_NAME FROM SYS.DBA_TAB_PRIVS WHERE GRANTEE = 'PUBLIC' AND PRIVILEGE = 'READ'</data_check>
+<details>PUBLIC can read from directories. Grant read access only to specific users or roles based on the principle of least privilege.</details>
+</check>
+<check>
+<count_check>SELECT '5.92:3:'||64*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE GRANTEE = 'PUBLIC' AND PRIVILEGE = 'WRITE'</count_check>
+<data_check>SELECT TABLE_NAME FROM SYS.DBA_TAB_PRIVS WHERE GRANTEE = 'PUBLIC' AND PRIVILEGE = 'WRITE'</data_check>
+<details>PUBLIC can write to directories. Grant write access only to specific users or roles based on the principle of least privilege.</details>
+</check>
+<check>
+<count_check>SELECT '5.93:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REDACT_INT' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can execute DBMS_REDACT_INT. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.94:2:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REDACT_INT' AND GRANTEE NOT IN ('SYS','SYSTEM','PUBLIC')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_REDACT_INT' AND GRANTEE NOT IN ('SYS','SYSTEM','PUBLIC')</data_check>
+<details>Users can execute DBMS_REDACT_INT. This should be reviewed.</details>
+</check>
+<check>
+<count_check>SELECT '5.95:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM') AND PRIVILEGE = 'UPDATE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM') AND PRIVILEGE = 'UPDATE'</data_check>
+<details>Users have the update privilege on SYS.USER$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.96:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM') AND PRIVILEGE = 'DELETE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM') AND PRIVILEGE = 'DELETE'</data_check>
+<details>Users have the delete privilege on SYS.USER$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.97:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LBAC_POLICY_ADMIN' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC can execute LBAC_POLICY_ADMIN. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.98:5:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LBAC_POLICY_ADMIN' AND GRANTEE NOT IN ('SYS','SYSTEM','PUBLIC')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LBAC_POLICY_ADMIN' AND GRANTEE NOT IN ('SYS','SYSTEM','PUBLIC')</data_check>
+<details>Users have the execute privilege on LBAC_POLICY_ADMIN. This should be reviewed.</details>
+</check>
+<check>
+<count_check>SELECT '5.99:2:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RULE_ADM' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_RULE_ADM. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.100:2:'||16*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RULE_ADM' AND GRANTEE NOT IN ('SYS','SYSTEM','PUBLIC')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_RULE_ADM' AND GRANTEE NOT IN ('SYS','SYSTEM','PUBLIC')</data_check>
+<details>Users have the execute privilege on DBMS_RULE_ADM. This should be reviewed.</details>
+</check>
+<check>
+<count_check>SELECT '5.101:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_STREAMS_ADM' AND GRANTEE = 'PUBLIC'</count_check>
+<data_check></data_check>
+<details>PUBLIC has the execute privilege on DBMS_STREAMS_ADM. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.102:3:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE PRIVILEGE = 'INDEX' and OWNER !=GRANTEE AND GRANTEE != 'SYSTEM'</count_check>
+<data_check>SELECT GRANTEE||':'||OWNER||'.'||TABLE_NAME FROM SYS.DBA_TAB_PRIVS WHERE PRIVILEGE = 'INDEX' and OWNER !=GRANTEE AND GRANTEE != 'SYSTEM'</data_check>
+<details>Users have the index privilege on other tables owned by other users</details>
+</check>
+<check>
+<count_check>SELECT '5.103:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM') AND PRIVILEGE = 'INSERT'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'USER$' AND GRANTEE NOT IN ('SYS','SYSTEM') AND PRIVILEGE = 'INSERT'</data_check>
+<details>Users have the insert privilege on SYS.USER$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.104:3:'||128*COUNT(*) FROM SYS.DBA_TAB_PRIVS T, SYS.DBA_PROCEDURES P WHERE T.TABLE_NAME ='DBMS_PDB_EXEC_SQL' AND T.GRANTEE = 'XDB' AND T.TABLE_NAME = P.OBJECT_NAME AND P.AUTHID = 'DEFINER'</count_check>
+<data_check></data_check>
+<details>XDB has the execute privilege on DBMS_PDB_EXEC_SQL</details>
+</check>
+<check>
+<count_check>SELECT '5.105:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_SYS_SQL' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB')</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_SYS_SQL' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB')</data_check>
+<details>Users have the execute privilege on DBMS_SYS_SQL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.106:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SYSAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'INSERT'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SYSAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'INSERT'</data_check>
+<details>Users have the insert privilege on SYS.SYSAUTH$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.107:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SYSAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'UPDATE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SYSAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'UPDATE'</data_check>
+<details>Users have the update privilege on SYS.SYSAUTH$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.108:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SYSAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'DELETE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'SYSAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'DELETE'</data_check>
+<details>Users have the delete privilege on SYS.SYSAUTH$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.109:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'OBJAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'INSERT'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'OBJAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'INSERT'</data_check>
+<details>Users have the insert privilege on SYS.OBJAUTH$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.110:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'OBJAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'UPDATE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'OBJAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'UPDATE'</data_check>
+<details>Users have the update privilege on SYS.OBJAUTH$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.111:5:'||256*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'OBJAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'DELETE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'OBJAUTH$' AND GRANTEE NOT IN ('SYS','SYSTEM','XDB','CTXSYS','DVSYS','LBACSYS','DV_SECANALYST') AND PRIVILEGE = 'DELETE'</data_check>
+<details>Users have the delete privilege on SYS.OBJAUTH$. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.112:3:'||32*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LTADM' AND GRANTEE = 'PUBLIC' AND PRIVILEGE = 'EXECUTE'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'LTADM' AND GRANTEE = 'PUBLIC' AND PRIVILEGE = 'EXECUTE'</data_check>
+<details>PUBLIC has the execute privilege on LTADM. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '5.113:3:'||64*COUNT(*) FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_SYS_SQL' AND GRANTEE = 'XDB'</count_check>
+<data_check>SELECT GRANTEE FROM SYS.DBA_TAB_PRIVS WHERE TABLE_NAME = 'DBMS_SYS_SQL' AND GRANTEE = 'XDB'</data_check>
+<details>XDB has the execute privilege on DBMS_SYS_SQL. This should be revoked.</details>
+</check>
+<check>
+<count_check>SELECT '6.0:2:'||4*COUNT(*) FROM SYS.DBA_DB_LINKS WHERE OWNER = 'PUBLIC'</count_check>
+<data_check>SELECT DB_LINK FROM SYS.DBA_DB_LINKS WHERE OWNER = 'PUBLIC'</data_check>
+<details>PUBLIC database links exists. These should be recreated as non-PUBLIC.</details>
+</check>
+<check>
+<count_check>SELECT '7.0:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE SESSION' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE SESSION is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.1:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'USER' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>USER is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.2:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'NOT EXISTS' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>NOT EXISTS is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.3:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'EXECUTE PROCEDURE' AND SUCCESS = 'NOT SET' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>EXECUTE PROCEDURE when not successful is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.4:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'DIRECTORY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>DIRECTORY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.5:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'GRANT DIRECTORY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>GRANT DIRECTORY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.6:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE LIBRARY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE LIBRARY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.7:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'ALTER SYSTEM' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>ALTER SYSTEM is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.8:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'SYSTEM AUDIT' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>SYSTEM AUDIT is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.9:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CONTEXT' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CONTEXT is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.10:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE JOB' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE JOB is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.11:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE EXTERNAL JOB' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE EXTERNAL JOB is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.12:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'TRIGGER' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>TRIGGER is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.13:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'SELECT ANY DICTIONARY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>SELECT ANY DICTIONARY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.14:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'SELECT ANY TABLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>SELECT ANY TABLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.15:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'INSERT ANY TABLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>INSERT ANY TABLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.16:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'DELETE ANY TABLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>DELETE ANY TABLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.17:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'UPDATE ANY TABLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>UPDATE ANY TABLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.18:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'EXECUTE ANY PROCEDURE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>EXECUTE ANY PROCEDURE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.19:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'EXECUTE ANY TYPE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>EXECUTE ANY TYPE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.20:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'EXECUTE ANY LIBRARY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>EXECUTE ANY LIBRARY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.21:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'ANALYZE ANY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>ANALYZE ANY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.22:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'INDEX' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>INDEX is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.23:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE PROCEDURE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE PROCEDURE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.24:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE TABLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE TABLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.25:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'ALTER TABLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>ALTER TABLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.26:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE VIEW' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE VIEW is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.27:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE TYPE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE TYPE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.28:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'PROFILE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>PROFILE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.29:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'SYSTEM GRANT' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>SYSTEM GRANT is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.30:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'GRANT ANY OBJECT PRIVILEGE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>GRANT ANY OBJECT PRIVILEGE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.31:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'ROLE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>ROLE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.32:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'EXEMPT ACCESS POLICY' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>EXEMPT ACCESS POLICY is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.33:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE DATABASE LINK' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE DATABASE LINK is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.34:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'CREATE PUBLIC DATABASE LINK' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>CREATE PUBLIC DATABASE LINK is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '7.35:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_STMT_AUDIT_OPTS WHERE USER_NAME IS NULL AND AUDIT_OPTION = 'ALTER DATABASE' AND SUCCESS = 'BY ACCESS' AND FAILURE = 'BY ACCESS'</count_check>
+<data_check></data_check>
+<details>ALTER DATABASE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.0:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'java/io/FileWriter' AND EXE = 'A/A'</count_check>
+<data_check>Execute on java/io/FileWriter is not audited.</data_check>
+<details></details>
+</check>
+<check>
+<count_check>SELECT '8.1:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'java/io/FileReader' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on java/io/FileReader is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.2:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'java/io/FileInputStream' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on java/io/FileInputStream is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.3:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'java/io/FileOutputStream' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on java/io/FileOutputStream is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.4:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'java/lang/Runtime' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on java/lang/Runtime is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.5:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'java/lang/System' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on java/lang/System is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.6:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_SCHEDULER' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_SCHEDULER is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.7:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_JOB' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_JOB is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.8:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_IJOB' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_IJOB is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.9:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'KUPP$PROC' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on KUPP$PROC is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.10:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'UTL_HTTP' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on UTL_HTTP is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.11:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'UTL_TCP' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on UTL_TCP is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.12:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'UTL_INADDR' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on UTL_INADDR is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.13:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'UTL_SMTP' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on UTL_SMTP is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.14:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'UTL_MAIL' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on UTL_MAIL is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.15:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'HTTPURITYPE' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on HTTPURITYPE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.16:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_LDAP' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_LDAP is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.17:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_LDAP_API_FFI' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_LDAP_API_FFI is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.18:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'XDB' AND OBJECT_NAME = 'DBMS_XSLPROCESSOR' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on XDB.DBMS_XSLPROCESSOR is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.19:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'MDSYS' AND OBJECT_NAME = 'SDO_NET' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.20:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_SQL' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on SDO_NET is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.21:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_SYS_SQL' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_SYS_SQL is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.22:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_AW' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_AW is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.23:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_XMLGEN' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_XMLGEN is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.24:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_XMLSAVE' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_XMLSAVE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.25:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_XMLSTORE' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_XMLSTORE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.26:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_SQLHASH' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_SQLHASH is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.27:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_REPCAT_RPC' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_REPCAT_RPC is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.28:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'UTL_FILE' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on UTL_FILE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.29:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_LOB' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_LOB is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.30:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_PIPE' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_PIPE is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.31:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_CRYPTO' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_CRYPTO is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.32:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_OBFUSCATION_TOOLKIT' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_OBFUSCATION_TOOLKIT is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.33:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_RLS' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_RLS is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.34:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_FGA' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_FGA is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.35:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_REDACT' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_REDACT is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.36:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_REDACT_INT' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_REDACT_INT is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.37:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'LBACSYS' AND OBJECT_NAME = 'LBAC_POLICY_ADMIN' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on LBACSYS.LBAC_POLICY_ADMIN is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.38:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_RULE_ADM' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_RULE_ADM is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.39:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_STREAMS_ADM' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute on DBMS_STREAMS_ADM is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.40:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'DBMS_AUDIT_MGMT' AND EXE = 'A/A'</count_check>
+<data_check></data_check>
+<details>Execute DBMS_AUDIT_MGMT on is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.41:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'AUD$' AND DEL = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE on AUD$ is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.42:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYS' AND OBJECT_NAME = 'FGA_LOG$' AND DEL = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE on FGA_LOG$ is not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.43:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYSTEM' AND OBJECT_NAME = 'OL$' AND DEL = 'A/A' AND INS = 'A/A' AND UPD = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE, INSERT and UPDATE on SYSTEM.OL$ are not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.44:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYSTEM' AND OBJECT_NAME = 'OL$NODES' AND DEL = 'A/A' AND INS = 'A/A' AND UPD = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE, INSERT and UPDATE on SYSTEM.OL$NODES are not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.45:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYSTEM' AND OBJECT_NAME = 'OL$HINTS' AND DEL = 'A/A' AND INS = 'A/A' AND UPD = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE, INSERT and UPDATE on SYSTEM.OL$HINTS are not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.46:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYSTEM' AND OBJECT_NAME = 'MVIEW$_ADV_PARTITION' AND DEL = 'A/A' AND INS = 'A/A' AND UPD = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE, INSERT and UPDATE on SYSTEM.MVIEW$_ADV_PARTITION are not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.47:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYSTEM' AND OBJECT_NAME = 'MVIEW$_ADV_OWB' AND DEL = 'A/A' AND INS = 'A/A' AND UPD = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE< INSERT and UPDATE on SYSTEM.MVIEW$_ADV_OWB are not audited.</details>
+</check>
+<check>
+<count_check>SELECT '8.48:2:'||((-4*(COUNT(*)+1))+8) FROM DBA_OBJ_AUDIT_OPTS WHERE OWNER = 'SYSTEM' AND OBJECT_NAME = 'MVIEW$_ADV_INDEX' AND DEL = 'A/A' AND INS = 'A/A' AND UPD = 'A/A'</count_check>
+<data_check></data_check>
+<details>DELETE, INSERT and UPDATE on SYSTEM.MVIEW$_ADV_INDEX are not audited.</details>
+</check>
+<check>
+<count_check>SELECT DISTINCT '9.0:1:4' FROM V$VERSION</count_check>
+<data_check>SELECT BANNER FROM V$VERSION</data_check>
+<details>Version information</details>
+</check>
+<check>
+<count_check>SELECT DISTINCT '9.1:1:4' FROM SYS.DBA_REGISTRY_HISTORY</count_check>
+<data_check>SELECT ACTION_TIME||':'||ACTION||':'||COMMENTS FROM SYS.DBA_REGISTRY_HISTORY</data_check>
+<details>Patch information</details>
+</check>
+</checks>
