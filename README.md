@@ -52,7 +52,18 @@ orcl.xml is the configuration file that contains the database connection informa
 ```$ ruby dssc.rb queries.xml orcl.xml```
 
 -- Redirect results to file 
-```$ ruby dssc.rb queries.xml orcl.xml > results.xml```
+```$ ruby dssc.rb queries.xml orcl.xml > results.xml
+```
+
+
+# Privileges for the scanning user
+
+The user account used for scanning purposes requires the following privileges:
+```
+CREATE SESSION
+SELECT ANY DICTIONARY
+SELECT ON SYS.USER$
+```
 
 
 
