@@ -4,26 +4,19 @@ This project defines a security baseline for Oracle database servers and provide
 
 # What's here?
 
-the_baseline.pdf
-A document describing the security baseline and the verification tool used to check for compliance.
+the_baseline.pdf: A document describing the security baseline and the verification tool used to check for compliance.
 
-AddendumtotheOracle12cCISGuidelines.pdf
-This is an Addendum to the CIS Guidelines for Oracle 12c that contains 32 additional security checks.
+AddendumtotheOracle12cCISGuidelines.pdf: This is an Addendum to the CIS Guidelines for Oracle 12c that contains 32 additional security checks.
 
-oracle_audit_plan.pdf
-A document and list of actions to be audited and the rationale under this security baseline. This also contains an SQL script for enabling the audit items.
+oracle_audit_plan.pdf: A document and list of actions to be audited and the rationale under this security baseline. This also contains an SQL script for enabling the audit items.
 
-hardening_summary_for_oracle.pdf
-A list of changes that need to be made. 
+hardening_summary_for_oracle.pdf: A list of changes that need to be made. 
 
-dssc.rb
-A security baseline verification tool written it Ruby. This reads in a list of SELECT queries that are executed to determine if a database system is compliant.
+dssc.rb: A security baseline verification tool written it Ruby. This reads in a list of SELECT queries that are executed to determine if a database system is compliant.
 
-queries.xml
-The list of queries.
+queries.xml: The list of queries.
 
-orcl.xml
-A sample database connection configuration file.
+orcl.xml: A sample database connection configuration file.
 
 
 # Running the Baseline Verification Tool
@@ -49,18 +42,17 @@ gem install ruby-oci8
 
 *** Running ***
 
-
-$ ruby dssc.rb queries.xml orcl.xml
+```$ ruby dssc.rb queries.xml orcl.xml```
 
 queries.xml contains the SQL select queries that are used to determine compliance with the baseline.
 orcl.xml is the configuration file that contains the database connection information. A sample configuration file called orcl.xml exists in the repository.
 
 
 -- Send results to stdout 
-$ ruby dssc.rb queries.xml orcl.xml
+```$ ruby dssc.rb queries.xml orcl.xml```
 
 -- Redirect results to file 
-$ ruby dssc.rb queries.xml orcl.xml > results.xml
+```$ ruby dssc.rb queries.xml orcl.xml > results.xml```
 
 
 
