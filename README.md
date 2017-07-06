@@ -33,6 +33,7 @@ If not, please do so :)
 
 *** Install ruby-oci8 first ****
 
+```
 mkdir -p /opt/oracle
 cd /opt/oracle 
 mv ~/Downloads/i*.zip /opt/oracle/
@@ -44,7 +45,7 @@ DYLD_LIBRARY_PATH=/opt/oracle/instantclient_12_1; export DYLD_LIBRARY_PATH
 ORACLE_HOME=/opt/oracle/instantclient_12_1; export ORACLE_HOME
 RC_ARCHS=x86_64; export RC_ARCHS
 gem install ruby-oci8
-
+```
 
 *** Running ***
 
