@@ -49,10 +49,13 @@ orcl.xml is the configuration file that contains the database connection informa
 
 
 -- Send results to stdout 
-```$ ruby dssc.rb queries.xml orcl.xml```
+```
+$ ruby dssc.rb queries.xml orcl.xml
+```
 
 -- Redirect results to file 
-```$ ruby dssc.rb queries.xml orcl.xml > results.xml
+```
+$ ruby dssc.rb queries.xml orcl.xml > results.xml
 ```
 
 
