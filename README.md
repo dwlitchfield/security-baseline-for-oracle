@@ -1,6 +1,6 @@
 # Litchfield's Security Baseline for Oracle
 
-This project defines a security baseline for the Oracle RDBMS and provides a tool for verifying compliance against the baseline.
+This project defines a security baseline for the Oracle RDBMS and provides a tool for verifying compliance against the baseline. This baseline extends the [CIS Guidelines](https://www.cisecurity.org/).
 
 The baseline covers such areas as parameter settings, patching, attack surface, system, role, and object privilege assignment (with an emphasis on PUBLIC defaults), audit options, critical misconfigurations and backdoors as well as user security and weak passwords.
 
