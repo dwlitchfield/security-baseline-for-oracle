@@ -1,10 +1,15 @@
 # Litchfield's Security Baseline for Oracle
 
-This project defines a security baseline for Oracle database servers and provides a tool to measure compliance against the baseline.
+This project defines a security baseline for the Oracle RDBMS and provides a tool for verifying compliance against the baseline.
+
+The baseline covers such areas as parameter settings, patching, attack surface, system, role, and object privilege assignment (with an emphasis on PUBLIC defaults), audit options, critical misconfigurations and backdoors as well as user security and weak passwords.
+
+The tool measures whether a particular setting is compliant with the baseline, details the level of risk if not compliant and generates a score based upon the exposure.
+
+The score for each item can be totaled to define an overall score that provides a strong indication about the database system's health, or scores can be tallied across the different security domains being measured.
+
 
 # What's here?
-
-the_baseline.pdf: A document describing the security baseline and the verification tool used to check for compliance.
 
 AddendumtotheOracle12cCISGuidelines.pdf: This is an Addendum to the CIS Guidelines for Oracle 12c that contains 32 additional security checks.
 
