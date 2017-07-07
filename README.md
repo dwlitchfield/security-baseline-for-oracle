@@ -13,7 +13,7 @@ The score for each item can be totaled to define an overall score that provides 
 
 AddendumtotheOracle12cCISGuidelines.pdf: This is an Addendum to the CIS Guidelines for Oracle 12c that contains 32 additional security checks.
 
-oracle_audit_plan.pdf: A document and list of actions to be audited and the rationale under this security baseline. This also contains an SQL script for enabling the audit items.
+oracle_audit_plan.pdf: A document and list of 82 actions to be audited and the rationale under this security baseline. This also contains an SQL script for enabling the audit items.
 
 hardening_summary_for_oracle.pdf: A list of changes that need to be made. 
 
